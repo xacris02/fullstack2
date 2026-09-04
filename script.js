@@ -1,19 +1,20 @@
-
 const ciudadesNo = [
-    "la cisterna", "renca", "curacavi", "las condes", "san bernardo", "providencia", "maipu", "pudahuel", "quilicura","nunoa", "macul", "florida", "valparaiso", "concepcion"];
+    "la cisterna", "renca", "curacavi", "las condes", "san bernardo", "providencia", "maipu", "pudahuel", "quilicura","nunoa", "macul", "florida", "valparaiso", "concepcion"
+];
 
 const soloLetras = /^[a-zA-ZáéíóúÁÉÍÓÚñÑ\s]+$/;
 const pinNumerico = /^\d{4}$/; 
-let usuarioR = []
-let contraR= []
+
+let usuarioR = [];
+let contraR = [];
 
 function registrarUsuario() {
     let nombre = document.getElementById("Nombre").value.trim();
     let apellido = document.getElementById("Apellido").value.trim();
     let fechaNacimiento = document.getElementById("fechaNacimiento").value;
     let direccion = document.getElementById("direccion").value.trim();
-    let region = document.getElementById("region").value.trim();
-    let comuna = document.getElementById("comuna").value.trim();
+    let region = document.getElementById("region").value;
+    let comuna = document.getElementById("comuna").value;
     let telefono = document.getElementById("telefono").value.trim();
     let regUsuario = document.getElementById("regUsuario").value.trim();
     let contrasena = document.getElementById("regContrasena").value;
@@ -47,6 +48,9 @@ function registrarUsuario() {
     if (regUsuario === "") {
         errores.push("Debe registrar un nombre de usuario.");
     }
+    if (usuarioR.includes(regUsuario)) {
+        errores.push("El nombre de usuario ya está registrado.");
+    }
 
     if (!pinNumerico.test(contrasena)) {
         errores.push("La contraseña debe ser un PIN numérico de exactamente 4 dígitos.");
@@ -63,9 +67,14 @@ function registrarUsuario() {
 
         resultado.innerHTML = '<div class="alert alert-danger">' + contenidoErrores + '</div>';
     } else {
-        usuarioR.push(regUsuario)
-        contraR.push(contrasena)
-        resultado.innerHTML = '<div class="alert alert-success"><h5 class="alert-heading fw-bold mb-0">¡Usuario registrado con éxito!</h5></div>';
+        usuarioR.push(regUsuario);
+        contraR.push(contrasena);
+
+        document.getElementById("Registro-Usuario").classList.add("d-none");
+        document.getElementById("paso-login").classList.remove("d-none");
+        resultado.innerHTML = '<div class="alert alert-success"><h5 class="alert-heading fw-bold mb-0">¡Usuario registrado con éxito! Ya puedes iniciar sesión.</h5></div>';
+
+        limpiarFormularioRegistro();
     }
 }
 
@@ -74,24 +83,34 @@ function btnRegistrar() {
     document.getElementById("Registro-Usuario").classList.remove("d-none");
     document.getElementById("paso-login").classList.add("d-none");
 }
-function btnRegistrarVolver() {
-    document.getElementById("resultado").innerHTML = "";
-    document.getElementById("Registro-Usuario").classList.add("d-none");
-    document.getElementById("paso-login").classList.remove("d-none");
-}
-
-
 
 function validarUsuario() {
     let usuario = document.getElementById("usuario").value.trim();
     let contrasena = document.getElementById("contrasena").value;
     let resultado = document.getElementById("resultado");
 
-    if (!usuarioR.includes(usuario)) {
-        resultado.innerHTML = '<div class="alert alert-warning">Usuario no Registrado.</div>';
-    } else if (!contraR.includes(contrasena)) {
-        resultado.innerHTML = '<div class="alert alert-danger">Contraseña Incorrecta.</div>';
+    let posicion = usuarioR.indexOf(usuario);
+
+    if (usuario === "" || contrasena === "") {
+        resultado.innerHTML = '<div class="alert alert-warning">Ingresa usuario y contraseña.</div>';
+    } else if (posicion === -1) {
+        resultado.innerHTML = '<div class="alert alert-warning">Usuario no registrado.</div>';
+    } else if (contraR[posicion] !== contrasena) {
+        resultado.innerHTML = '<div class="alert alert-danger">Contraseña incorrecta.</div>';
     } else {
         resultado.innerHTML = '<div class="alert alert-success">¡Inicio de sesión correcto! Bienvenid@ ' + usuario + '.</div>';
     }
+}
+
+function limpiarFormularioRegistro() {
+    document.getElementById("Nombre").value = "";
+    document.getElementById("Apellido").value = "";
+    document.getElementById("fechaNacimiento").value = "";
+    document.getElementById("direccion").value = "";
+    document.getElementById("region").selectedIndex = 0;
+    document.getElementById("comuna").selectedIndex = 0;
+    document.getElementById("telefono").value = "";
+    document.getElementById("regUsuario").value = "";
+    document.getElementById("regContrasena").value = "";
+    document.getElementById("confirmarContrasena").value = "";
 }

@@ -66,11 +66,19 @@
                             </div>
                             <div class="mb-3">
                                 <label for="region" class="form-label fw-semibold">Región</label>
-                                <input type="text" id="region" class="form-control" placeholder="Metropolitana">
+                                <select id="region" class="form-select">
+                                    <option value="" selected disabled>Selecciona tu región...</option>
+                                    <option value="metropolitana">Metropolitana</option>
+                                </select>
                             </div>
                             <div class="mb-3">
                                 <label for="comuna" class="form-label fw-semibold">Comuna</label>
-                                <input type="text" id="comuna" class="form-control" placeholder="Santiago">
+                                <select id="comuna" class="form-select">
+                                    <option value="" selected disabled>Selecciona tu región...</option>
+                                    <option value="Santiago">Santiago</option>
+                                    <option value="LaReina">La Reina</option>
+                                    <option value="PuenteAlto">Puente Alto</option>
+                                </select>
                             </div>
                             <div class="mb-3">
                                 <label for="telefono" class="form-label fw-semibold">Teléfono</label>
@@ -90,9 +98,6 @@
                             </div>
                             <button class="btn btn-secondary" onclick="registrarUsuario()">
                                 Guardar Usuario
-                            </button>
-                            <button class="btn btn-primary" onclick="btnRegistrarVolver()">
-                                Volver
                             </button>
                         </div>
 
