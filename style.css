@@ -1,0 +1,18 @@
+body {
+    background-image: url('https://images.unsplash.com/photo-1511512578047-dfb367046420?fm=jpg&q=60&w=3000&auto=format&fit=crop');
+    background-size: cover;
+    background-repeat: no-repeat;
+    background-position: center;
+    background-attachment: fixed;
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+}
+
+.card-transparente {
+    background-color: rgba(255, 255, 255, 0.90);
+}
+
+main {
+    flex: 1;
+}
